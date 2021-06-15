@@ -1,0 +1,55 @@
+{
+  "name": "v-pdf",
+  "version": "1.0.0",
+  "description": "A Vue 3 Pdf Tools",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "build:package": "npm run gen-version && npm run clean && tsc -b --force tsconfig.esm.json && node scripts/pre-build/pre-cjs-build.js && tsc -b --force tsconfig.cjs.json && node scripts/post-build",
+    "clean": "rimraf site lib es node_modules/v-pdf",
+    "release:package": "npm run build:package && npm publish",
+    "gen-version": "node scripts/gen-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lanseria/v-pdf.git"
+  },
+  "keywords": [
+    "v-pdf",
+    "component library",
+    "pdf",
+    "vue"
+  ],
+  "author": "Lanseria",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lanseria/v-pdf/issues"
+  },
+  "homepage": "https://github.com/Lanseria/v-pdf#readme",
+  "devDependencies": {
+    "@types/lodash": "^4.14.170",
+    "@types/lodash-es": "^4.17.4",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "@vitejs/plugin-vue": "^1.2.3",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "eslint": "^7.28.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.11.1",
+    "prettier": "^2.3.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.3.2",
+    "vite": "^2.3.7",
+    "vue": "^3.0.10",
+    "vue-router": "^4.0.5"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21"
+  }
+}
