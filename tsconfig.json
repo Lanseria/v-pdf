@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "v-pdf": ["./src"]
+      "@lanseria/v-pdf": ["./src"]
     },
     "strict": true,
     "strictNullChecks": true,

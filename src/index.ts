@@ -1,5 +1,7 @@
-function vPdf () {
-  console.log('say hi v-pdf.');
-}
+export { default } from "./preset";
 
-export {vPdf}
+export { default as create } from "./create";
+
+export * from "./components";
+
+export { default as version } from "./version";
