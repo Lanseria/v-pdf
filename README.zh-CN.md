@@ -27,4 +27,4 @@ npm i -D v-pdf
 
 ## 许可
 
-Naive UI 使用 [MIT license](https://opensource.org/licenses/MIT) 许可证书。
+v-pdf 使用 [MIT license](https://opensource.org/licenses/MIT) 许可证书。

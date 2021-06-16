@@ -27,4 +27,4 @@ Please see [CONTRIBUTING.md](https://github.com/Lanseria/v-pdf/blob/main/CONTRIB
 
 ## License
 
-Naive UI is licensed under the [MIT license](https://opensource.org/licenses/MIT).
+v-pdf is licensed under the [MIT license](https://opensource.org/licenses/MIT).

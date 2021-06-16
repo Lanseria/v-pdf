@@ -10,7 +10,7 @@ module.exports = {
   root: __dirname,
   plugins: createDemoPlugin(),
   resolve: {
-    // In production site build, we want to import naive-ui from node_modules
+    // In production site build, we want to import v-pdf from node_modules
     alias:
       process.env.NODE_ENV !== "production"
         ? [
