@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@lanseria/v-pdf": ["./src"]
+      "@lanseria/v-pdf/*": ["./src/*"]
     },
     "strict": true,
     "strictNullChecks": true,
@@ -17,6 +17,7 @@
     "lib": [
       "ESNext",
       "DOM"
-    ]
+    ],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
   }
 }

@@ -5,3 +5,4 @@ declare module "*.vue" {
   export default component;
 }
 declare module "pdfjs-dist/build/pdf.worker.entry";
+declare module "pdfjs-dist/web/pdf_viewer";
