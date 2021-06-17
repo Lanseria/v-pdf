@@ -51,3 +51,11 @@ To learn more, checkout [the series of posts](https://rossta.net/blog/series/pdf
 ### pdf.js doc
 
 [Doc](https://mozilla.github.io/pdf.js/api/draft/index.html)
+
+### pdf.js viewer code
+
+[web/app.js](https://github.com/mozilla/pdf.js/blob/master/web/app.js)
+
+### set pdf.js viewer locale
+
+[issues](https://github.com/mozilla/pdf.js/issues/11829)
