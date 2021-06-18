@@ -12,6 +12,9 @@ import {
   PDFPageView
 } from "pdfjs-dist/web/pdf_viewer";
 import { ExtractPublicPropTypes } from "@lanseria/v-pdf/types/extract-public-props";
+import { useResizeObserver } from "@vueuse/core";
+// css
+import "@lanseria/v-pdf/styles/index.css";
 const pdfViewerProps = {
   src: {
     type: String,
@@ -109,6 +112,13 @@ export default defineComponent({
         });
       }
     );
+
+    useResizeObserver(document.body, entries => {
+      const entry = entries[0];
+      const { width, height } = entry.contentRect;
+      console.log(`width: ${width}, height: ${height}`);
+      drawScaled("page-width");
+    });
     onMounted(async () => {
       pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
       const source = {
@@ -177,6 +187,6 @@ export default defineComponent({
     };
   },
   render() {
-    return <div id="vPdfViewer"></div>;
+    return <div id="vPdfViewer" class="pdf-app"></div>;
   }
 });

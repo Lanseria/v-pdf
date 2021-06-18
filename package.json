@@ -71,6 +71,7 @@
     "vue-router": "^4.0.0"
   },
   "dependencies": {
+    "@vueuse/core": "^5.0.3",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "pdfjs-dist": "^2.8.335"

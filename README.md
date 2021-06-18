@@ -59,3 +59,7 @@ To learn more, checkout [the series of posts](https://rossta.net/blog/series/pdf
 ### set pdf.js viewer locale
 
 [issues](https://github.com/mozilla/pdf.js/issues/11829)
+
+### vue full feature pdf.js demo
+
+[github](https://github.com/sandanat/vue-pdf-app)
