@@ -1,28 +1,21 @@
-import { h, defineComponent, reactive, onMounted, watch } from "vue";
+import {
+  h,
+  defineComponent,
+  reactive,
+  onMounted,
+  toRefs,
+  provide,
+  toRef
+} from "vue";
 import * as pdfjsLib from "pdfjs-dist";
 import * as pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
-import { PDFDocumentProxy, PDFPageProxy } from "pdfjs-dist/types/display/api";
-
-import {
-  EventBus,
-  PDFLinkService,
-  PDFFindController,
-  DefaultAnnotationLayerFactory,
-  DefaultTextLayerFactory,
-  PDFPageView
-} from "pdfjs-dist/web/pdf_viewer";
+import { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
 import { ExtractPublicPropTypes } from "@lanseria/v-pdf/types/extract-public-props";
-import { useResizeObserver } from "@vueuse/core";
-// css
-import "@lanseria/v-pdf/styles/index.css";
+import PdfPage from "./Page";
 const pdfViewerProps = {
   src: {
     type: String,
     required: true
-  },
-  page: {
-    type: Number,
-    default: 1
   },
   scale: {
     type: [Number, String],
@@ -51,74 +44,15 @@ export type PdfViewerProps = ExtractPublicPropTypes<typeof pdfViewerProps>;
 export default defineComponent({
   name: "PdfViewer",
   props: pdfViewerProps,
+  components: {
+    PdfPage
+  },
   setup(props, { emit }) {
-    const state = reactive({
-      internalSrc: props.src,
-      eventBus: new EventBus(),
-      pdfDocument: undefined as unknown as PDFDocumentProxy,
-      pdfPage: undefined as unknown as PDFPageProxy,
-      pdfViewer: undefined as any,
-      pdfLinkService: undefined as any,
-      pdfFindController: undefined as any,
-      loading: false
+    const refState = reactive({
+      numPages: [] as number[],
+      pdfDocument: undefined as unknown as PDFDocumentProxy
     });
-    const calculateScale = (width = -1, height = -1) => {
-      state.pdfViewer.update(1, props.rotate); // Reset scaling to 1 so that "this.pdfViewer.viewport.width" gives proper width;
-      if (width === -1 && height === -1) {
-        width = document.getElementById("vPdfViewer")!.offsetWidth;
-      }
-
-      return width / state.pdfViewer.viewport.width;
-    };
-    const calculateScaleHeight = () => {
-      state.pdfViewer.update(1, props.rotate); // Reset scaling to 1 so that "this.pdfViewer.viewport.width" gives proper width;
-      var height = document.getElementById("vPdfViewer")!.offsetHeight;
-      var parentel =
-        document.getElementById("vPdfViewer")!.parentElement!.parentElement;
-      return parentel!.offsetHeight / height;
-    };
-    const drawScaled = (newScale: number | string) => {
-      if (state.pdfViewer) {
-        if (newScale === "page-width") {
-          newScale = calculateScale();
-          emit("update:scale", newScale);
-        } else if (newScale === "page-height") {
-          newScale = calculateScaleHeight();
-          emit("update:scale", newScale);
-        }
-        state.pdfViewer.update(newScale, props.rotate);
-        // The SimpleLinkService from the DefaultAnnotationLayerFactory doesn't do anything with links so override with our LinkService after it is created
-        console.log(state.pdfViewer);
-        state.pdfViewer.annotationLayer =
-          state.pdfViewer.annotationLayerFactory.createAnnotationLayerBuilder(
-            state.pdfViewer.div,
-            state.pdfViewer.pdfPage
-          );
-        state.pdfViewer.annotationLayer.linkService = state.pdfLinkService;
-        state.pdfViewer.draw();
-        // The findController needs the text layer to have been created in the Draw() function, so link it in now
-        state.pdfViewer.textLayer.findController = state.pdfFindController;
-        state.loading = false;
-        emit("loading", false);
-      }
-    };
-    watch(
-      () => props.page,
-      (nPage, oPage) => {
-        state.pdfDocument.getPage(nPage).then(function (pdfPage) {
-          console.log("draw");
-          state.pdfViewer.setPdfPage(pdfPage);
-          state.pdfViewer.draw();
-        });
-      }
-    );
-
-    useResizeObserver(document.body, entries => {
-      const entry = entries[0];
-      const { width, height } = entry.contentRect;
-      console.log(`width: ${width}, height: ${height}`);
-      drawScaled("page-width");
-    });
+    provide("pdfDocument", toRef(refState, "pdfDocument"));
     onMounted(async () => {
       pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
       const source = {
@@ -126,67 +60,29 @@ export default defineComponent({
         withCredentials: false
       };
 
-      state.pdfDocument = await pdfjsLib.getDocument(source).promise;
-      console.log(state.pdfDocument);
-      state.pdfPage = await state.pdfDocument.getPage(props.page);
-      console.log(state.pdfPage);
-
-      // (Optionally) enable hyperlinks within PDF files.
-      state.pdfLinkService = new PDFLinkService({
-        eventBus: state.eventBus,
-        externalLinkTarget: 2
-      });
-
-      // (Optionally) enable find controller.
-      state.pdfFindController = new PDFFindController({
-        eventBus: state.eventBus,
-        linkService: state.pdfLinkService
-      });
-
-      let annotationLayer = undefined,
-        textLayer = undefined;
-
-      if (props.annotation) {
-        annotationLayer = new DefaultAnnotationLayerFactory();
+      refState.pdfDocument = await pdfjsLib.getDocument(source).promise;
+      for (let i = 0; i < refState.pdfDocument.numPages; i++) {
+        refState.numPages.push(i + 1);
       }
-      if (props.text) {
-        textLayer = new DefaultTextLayerFactory();
-      }
-
-      // create
-      state.pdfViewer = new PDFPageView({
-        container: document.getElementById("vPdfViewer"),
-        id: props.page,
-        scale: 1,
-        defaultViewport: state.pdfPage.getViewport({
-          scale: 1
-        }),
-        eventBus: state.eventBus,
-        textLayerFactory: textLayer,
-        annotationLayerFactory: annotationLayer
-      });
-      state.loading = false;
-      emit("loading", false);
-
-      // Associates the actual page with the view, and drawing it
-      state.pdfViewer.setPdfPage(state.pdfPage);
-
-      const viewer = {
-        scrollPageIntoView: function (params: any) {
-          // Send an event when clicking internal links so we can handle loading/scrolling to the correct page
-          emit("link-clicked", params);
-        }
-      };
-      state.pdfLinkService.setDocument(state.pdfDocument);
-      state.pdfLinkService.setViewer(viewer);
-      state.pdfFindController.setDocument(state.pdfDocument);
-      drawScaled(props.scale);
+      // refState.numPages = [1, 2];
+      // console.log(state.pdfDocument);
+      // state.pdfPage = await state.pdfDocument.getPage(props.page);
+      // console.log(state.pdfPage);
     });
     return {
-      test: "test"
+      ...toRefs(refState)
     };
   },
   render() {
-    return <div id="vPdfViewer" class="pdf-app"></div>;
+    return (
+      <div
+        class="pdf-app"
+        style="overflow-y: scroll; overflow-x: hidden; height: 100%;"
+      >
+        {this.numPages.map(i => (
+          <PdfPage key={i} page={i} scale={this.scale} />
+        ))}
+      </div>
+    );
   }
 });

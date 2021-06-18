@@ -18,6 +18,13 @@
       "ESNext",
       "DOM"
     ],
+    
     "typeRoots": ["./node_modules/@types", "./src/types"],
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+  ],
+  "exclude": ["node_modules"]
 }
