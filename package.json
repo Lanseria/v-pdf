@@ -18,7 +18,7 @@
     "release:package": "npm run build:package && npm publish",
     "gen-version": "node scripts/gen-version",
     "format": "npm run format:code",
-    "format:code": "prettier --write \"(src|demo|build|scripts)/**/*.(vue|js|tsx)\""
+    "format:code": "prettier --write \"(src|demo|build|scripts)/**/*.(vue|js|tsx|ts)\""
   },
   "repository": {
     "type": "git",
