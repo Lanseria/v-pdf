@@ -5,11 +5,13 @@
 
 ## Documentation
 
-[www.v-pdf.com](http://www.v-pdf.com)
+[https://github.com/Lanseria/v-pdf#readme](https://github.com/Lanseria/v-pdf#readme)
 
 ## Features
 
-TODO
+- 支持 PDF 预览
+- 仅支持 vue 3
+- 支持 PDF 文字复制
 
 ## Installation
 
@@ -19,6 +21,16 @@ Use npm to install.
 
 ```bash
 npm i -D @lanseria/v-pdf
+```
+
+### USE
+
+```vue
+<template>
+  <v-pdf-viewer
+    src="https://cdn.filestackcontent.com/wcrjf9qPTCKXV3hMXDwK"
+  ></v-pdf-viewer>
+</template>
 ```
 
 ## Contributing

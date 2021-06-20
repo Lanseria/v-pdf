@@ -1,6 +1,6 @@
 {
   "name": "@lanseria/v-pdf",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A Vue 3 Pdf Tools",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -16,7 +16,9 @@
     "build:site": "./scripts/pre-build-site/pre-build-site.sh && cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=4096 vite build && ./scripts/post-build-site/post-build-site.sh",
     "clean": "rimraf site lib es node_modules/v-pdf",
     "release:package": "npm run build:package && npm publish",
-    "gen-version": "node scripts/gen-version"
+    "gen-version": "node scripts/gen-version",
+    "format": "npm run format:code",
+    "format:code": "prettier --write \"(src|demo|build|scripts)/**/*.(vue|js|tsx)\""
   },
   "repository": {
     "type": "git",
@@ -34,6 +36,31 @@
     "url": "https://github.com/Lanseria/v-pdf/issues"
   },
   "homepage": "https://github.com/Lanseria/v-pdf#readme",
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.tsx": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.vue": [
+      "prettier --parser=vue --write",
+      "eslint --fix"
+    ],
+    "*.css": [
+      "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write --parser markdown --prose-wrap never",
+      "eslint --fix"
+    ]
+  },
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/generator": "^7.12.11",
