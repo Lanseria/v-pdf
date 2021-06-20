@@ -1,4 +1,5 @@
 import { ExtractPublicPropTypes } from "../../types/extract-public-props";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { h, defineComponent } from "vue";
 const vPdfViewerWebProps = {
   src: {
@@ -27,12 +28,19 @@ export default defineComponent({
   },
   render() {
     return (
-      <iframe
+      <object
+        data={this.src}
+        type="application/pdf"
         width={this.width}
         height={this.height}
-        style="border: none"
-        src={this.src}
-      ></iframe>
+      >
+        <iframe
+          width={this.width}
+          height={this.height}
+          style="border: none"
+          src={this.src}
+        ></iframe>
+      </object>
     );
   }
 });

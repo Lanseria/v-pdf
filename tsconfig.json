@@ -14,10 +14,8 @@
     "forceConsistentCasingInFileNames": true,
     "composite": true,
     "target": "ES6",
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
-    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "lib": ["ESNext", "DOM"],
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
