@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@lanseria/v-pdf/*": ["./src/*"]
+      "@lanseria/v-pdf": ["./src"]
     },
     "strict": true,
     "strictNullChecks": true,
@@ -18,13 +18,6 @@
       "ESNext",
       "DOM"
     ],
-    
     "typeRoots": ["./node_modules/@types", "./src/types"],
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-  ],
-  "exclude": ["node_modules"]
 }

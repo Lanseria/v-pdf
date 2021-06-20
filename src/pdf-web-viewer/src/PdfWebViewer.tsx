@@ -1,4 +1,4 @@
-import { ExtractPublicPropTypes } from "@lanseria/v-pdf/types/extract-public-props";
+import { ExtractPublicPropTypes } from "../../types/extract-public-props";
 import { h, defineComponent } from "vue";
 const vPdfViewerWebProps = {
   src: {

@@ -1,6 +1,6 @@
 {
   "name": "@lanseria/v-pdf",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Vue 3 Pdf Tools",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -12,7 +12,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "npm run clean && npm run gen-version && cross-env NODE_ENV=development vite",
-    "build:package": "npm run gen-version && npm run clean && tsc -b --force tsconfig.esm.json && node scripts/pre-build/pre-cjs-build.js && tsc -b --force tsconfig.cjs.json && node scripts/post-build",
+    "build:package": "npm run gen-version && npm run clean && tsc -b --force tsconfig.esm.json && node scripts/pre-build/pre-cjs-build.js && tsc -b --force tsconfig.cjs.json && node scripts/post-build && rimraf {es,lib}/*.tsbuildinfo",
     "build:site": "./scripts/pre-build-site/pre-build-site.sh && cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=4096 vite build && ./scripts/post-build-site/post-build-site.sh",
     "clean": "rimraf site lib es node_modules/v-pdf",
     "release:package": "npm run build:package && npm publish",
@@ -61,6 +61,7 @@
       "eslint --fix"
     ]
   },
+  "sideEffects": false,
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/generator": "^7.12.11",
@@ -70,6 +71,7 @@
     "@babel/preset-typescript": "^7.12.16",
     "@babel/traverse": "^7.12.12",
     "@rollup/plugin-babel": "^5.3.0",
+    "@types/estree": "^0.0.48",
     "@types/lodash": "^4.14.170",
     "@types/lodash-es": "^4.17.4",
     "@types/pdfjs-dist": "^2.7.3",
@@ -79,6 +81,7 @@
     "@vue/compiler-sfc": "^3.1.1",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
+    "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.28.0",
     "eslint-plugin-prettier": "^3.4.0",

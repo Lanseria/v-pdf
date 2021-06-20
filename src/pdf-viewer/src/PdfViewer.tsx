@@ -10,7 +10,7 @@ import {
 import * as pdfjsLib from "pdfjs-dist";
 import * as pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
 import { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
-import { ExtractPublicPropTypes } from "@lanseria/v-pdf/types/extract-public-props";
+import { ExtractPublicPropTypes } from "../../types/extract-public-props";
 import PdfPage from "./Page";
 const pdfViewerProps = {
   src: {

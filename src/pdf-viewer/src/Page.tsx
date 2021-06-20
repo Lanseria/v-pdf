@@ -19,7 +19,7 @@ import {
   DefaultTextLayerFactory,
   PDFPageView
 } from "pdfjs-dist/web/pdf_viewer";
-import { ExtractPublicPropTypes } from "@lanseria/v-pdf/types/extract-public-props";
+import { ExtractPublicPropTypes } from "../../types/extract-public-props";
 import { useResizeObserver } from "@vueuse/core";
 import "pdfjs-dist/web/pdf_viewer.css";
 const pdfViewerProps = {
@@ -81,8 +81,8 @@ export default defineComponent({
     };
     const calculateScaleHeight = () => {
       state.pdfViewer.update(1, props.rotate); // Reset scaling to 1 so that "this.pdfViewer.viewport.width" gives proper width;
-      var height = refState.pdfPageRef.offsetHeight;
-      var parentel = refState.pdfPageRef.parentElement.parentElement;
+      const height = refState.pdfPageRef.offsetHeight;
+      const parentel = refState.pdfPageRef.parentElement.parentElement;
       return parentel.offsetHeight / height;
     };
     const drawScaled = (newScale: number | string) => {
