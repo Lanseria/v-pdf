@@ -1,5 +1,5 @@
 import { ExtractPublicPropTypes } from "../../types/extract-public-props";
-import { defineComponent, onMounted, ref, h } from "vue";
+import { defineComponent, onMounted, ref, h, Fragment } from "vue";
 import * as pdfjsLib from "pdfjs-dist";
 import {
   EventBus,
@@ -9,7 +9,6 @@ import {
 } from "pdfjs-dist/web/pdf_viewer";
 import { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
 import { useResizeObserver } from "@vueuse/core";
-import "./style.css";
 const vPdfJsViewerProps = {
   src: {
     type: String,
@@ -185,26 +184,53 @@ export default defineComponent({
   },
   render() {
     return (
-      <div class="pdf-app" ref="PdfAppRef" id="drawer-target">
-        <div ref="PdfTopBarRef" class="top-bar">
-          <div class="left-box"></div>
-          <div class="center-box">
-            <button style="margin-right: 10px" onClick={this.handlePrev}>
-              上一页
-            </button>
+      <>
+        <div
+          class="pdf-app"
+          ref="PdfAppRef"
+          id="drawer-target"
+          style="display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;"
+        >
+          <div
+            ref="PdfTopBarRef"
+            class="top-bar"
+            style="background: #e9e9e9;
+                    padding: 1rem;
+                    flex: 0 0 53px;
+                    box-sizing: border-box;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;"
+          >
+            <div class="left-box"></div>
+            <div class="center-box">
+              <button style="margin-right: 10px" onClick={this.handlePrev}>
+                上一页
+              </button>
 
-            <button onClick={this.handleNext}> 下一页 </button>
+              <button onClick={this.handleNext}> 下一页 </button>
+            </div>
+            <div class="right-box">
+              <span class="page-info" style="margin-left: 1rem;">
+                当前 <span>{this.currentNum}</span> / 页数
+                <span>{this.numPages}</span>
+              </span>
+            </div>
           </div>
-          <div class="right-box">
-            <span class="page-info">
-              当前 <span>{this.currentNum}</span> / 页数
-              <span>{this.numPages}</span>
-            </span>
-          </div>
+
+          <div
+            ref="PdfPageRef"
+            class="pdf-doc"
+            style="position: relative;
+                    flex: 1;
+                    overflow-y: scroll;
+                    overflow-x: hidden;"
+          ></div>
         </div>
-
-        <div ref="PdfPageRef" class="pdf-doc"></div>
-      </div>
+      </>
     );
   }
 });
