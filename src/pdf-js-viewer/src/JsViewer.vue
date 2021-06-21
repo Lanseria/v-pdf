@@ -1,9 +1,7 @@
 <template>
   <div class="pdf-app" ref="PdfAppRef" id="drawer-target">
     <div ref="PdfTopBarRef" class="top-bar">
-      <div class="left-box">
-        <n-button @click="active = true"> 目录 </n-button>
-      </div>
+      <div class="left-box"></div>
       <div class="center-box">
         <n-button style="margin-right: 10px" @click="handlePrev()">
           上一页
@@ -20,19 +18,10 @@
     </div>
 
     <div ref="PdfPageRef" class="pdf-doc"></div>
-    <n-drawer
-      v-model:show="active"
-      :width="200"
-      :height="200"
-      placement="left"
-      to="#drawer-target"
-    >
-      <n-drawer-content title="目录"> TODO </n-drawer-content>
-    </n-drawer>
   </div>
 </template>
 <script lang="ts">
-import { NButton, NDrawerContent, NDrawer } from "naive-ui";
+import { NButton } from "naive-ui";
 import { defineComponent, onMounted, ref } from "vue";
 import * as pdfjsLib from "pdfjs-dist";
 import {
@@ -45,9 +34,7 @@ import { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
 import { useResizeObserver } from "@vueuse/core";
 export default defineComponent({
   components: {
-    NButton,
-    NDrawerContent,
-    NDrawer
+    NButton
   },
   props: {
     src: {
@@ -223,14 +210,21 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 }
+
+.pdf-doc {
+  position: relative;
+}
+
 .pdf-doc :deep(.page) {
   position: relative;
 }
+
 .pdf-doc {
   flex: 1;
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
 .top-bar {
   background: #e9e9e9;
   padding: 1rem;

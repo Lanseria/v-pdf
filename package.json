@@ -1,6 +1,6 @@
 {
   "name": "@lanseria/v-pdf",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A Vue 3 Pdf Tools",
   "main": "lib/index.js",
   "module": "es/index.js",

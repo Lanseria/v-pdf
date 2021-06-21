@@ -5,6 +5,8 @@
     src="http://183.131.134.242:1889/files/20210619/383518b085f9469eb9ec34594196f8c7.pdf"
   ></VPdfWebViewer> -->
   <VPdfJsViewer
+    width="400px"
+    height="600px"
     src="http://183.131.134.242:1889/files/20210619/383518b085f9469eb9ec34594196f8c7.pdf"
   ></VPdfJsViewer>
 </template>
