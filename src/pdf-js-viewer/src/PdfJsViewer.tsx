@@ -37,6 +37,12 @@ export default defineComponent({
     };
   },
   render() {
-    return <JsViewer></JsViewer>;
+    return (
+      <JsViewer
+        src={this.src}
+        width={this.width}
+        height={this.height}
+      ></JsViewer>
+    );
   }
 });

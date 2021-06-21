@@ -114,7 +114,6 @@ export default defineComponent({
       () => props.page,
       (nPage, oPage) => {
         state.pdfDocument.getPage(nPage).then(function (pdfPage) {
-          console.log("draw");
           state.pdfViewer.setPdfPage(pdfPage);
           state.pdfViewer.draw();
         });
